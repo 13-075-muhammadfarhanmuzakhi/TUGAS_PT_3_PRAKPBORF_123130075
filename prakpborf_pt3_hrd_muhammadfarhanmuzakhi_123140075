@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-# Kelas induk Karyawan
 class Karyawan(ABC):
     def __init__(self, nama, peran, jam_kerja, tugas_selesai):
         self.nama = nama
@@ -25,7 +24,6 @@ class Karyawan(ABC):
         print(f"{self.nama} ({self.peran}) sedang bekerja.")
         print(f"Peringkat Kinerja: {self.evaluasi_kinerja()}\n")
 
-# Kelas turunan InsinyurPerangkatLunak
 class software_engineer(Karyawan):
     def __init__(self, nama, jam_kerja, tugas_selesai):
         super().__init__(nama, "Software Engineer", jam_kerja, tugas_selesai)
@@ -33,7 +31,6 @@ class software_engineer(Karyawan):
     def bekerja(self):
         print(f"{self.nama} (Software Engineer) sedang ngoding.")
 
-# Kelas turunan IlmuwanData
 class data_scientist(Karyawan):
     def __init__(self, nama, jam_kerja, tugas_selesai):
         super().__init__(nama, "Data Scientist", jam_kerja, tugas_selesai)
@@ -41,7 +38,6 @@ class data_scientist(Karyawan):
     def bekerja(self):
         print(f"{self.nama} (Data Scientist) sedang menganalisis data.")
 
-# Kelas turunan ManajerProduk
 class ManajerProduk(Karyawan):
     def __init__(self, nama, jam_kerja, tugas_selesai):
         super().__init__(nama, "Product Manager", jam_kerja, tugas_selesai)
