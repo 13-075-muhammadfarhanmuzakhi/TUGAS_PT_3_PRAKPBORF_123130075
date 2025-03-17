@@ -1,0 +1,59 @@
+# muhammad farhan muzakhi_123140075
+from abc import ABC, abstractmethod
+
+class Plant(ABC):
+    def __init__(self, nama, kebutuhan_air, kebutuhan_pupuk):
+        self.nama = nama
+        self.kebutuhan_air = kebutuhan_air
+        self.kebutuhan_pupuk = kebutuhan_pupuk
+    
+    @abstractmethod
+    def grow(self):
+        pass
+    
+    def calculate_needs(self, curah_hujan, kelembapan_tanah):
+        # Mengurangi kebutuhan air berdasarkan hujan
+        if curah_hujan > 5:
+            self.kebutuhan_air *= 0.75  # Mengurangi 25% jika curah hujan tinggi
+        elif curah_hujan > 2:
+            self.kebutuhan_air *= 0.9  # Mengurangi 10% jika curah hujan sedang
+        
+        if kelembapan_tanah > 70:
+            self.kebutuhan_pupuk *= 0.8  # Mengurangi 20% jika tanah sangat lembap
+        elif kelembapan_tanah > 50:
+            self.kebutuhan_pupuk *= 0.9  # Mengurangi 10% jika tanah cukup lembap
+    
+    def show_needs(self, curah_hujan, kelembapan_tanah):
+        print(f"{self.nama} sedang tumbuh di ladang")
+        print(f"Laporan Cuaca: Curah Hujan = {curah_hujan} mm, Kelembapan Tanah = {kelembapan_tanah}%")
+        print(f"Kebutuhan Air yang Disesuaikan: {self.kebutuhan_air:.1f} liter")
+        print(f"Kebutuhan Pupuk yang Disesuaikan: {self.kebutuhan_pupuk:.1f} kg")
+        print("-")
+
+class RicePlant(Plant):
+    def __init__(self):
+        super().__init__("Padi", 20, 5)
+    
+    def grow(self):
+        print("Padi sedang tumbuh di sawah")
+
+class CornPlant(Plant):
+    def __init__(self):
+        super().__init__("Jagung", 20, 7)
+    
+    def grow(self):
+        print("Jagung sedang tumbuh di ladang")
+
+curah_hujan = [10, 2]  # mm
+kelembapan_tanah = [75, 40]  # %
+
+padi = RicePlant()
+jagung = CornPlant()
+
+padi.grow()
+padi.calculate_needs(curah_hujan[0], kelembapan_tanah[0])
+padi.show_needs(curah_hujan[0], kelembapan_tanah[0])
+
+jagung.grow()
+jagung.calculate_needs(curah_hujan[1], kelembapan_tanah[1])
+jagung.show_needs(curah_hujan[1], kelembapan_tanah[1])
