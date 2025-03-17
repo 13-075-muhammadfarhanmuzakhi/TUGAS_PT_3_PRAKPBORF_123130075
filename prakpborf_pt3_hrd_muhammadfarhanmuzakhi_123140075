@@ -1,0 +1,60 @@
+from abc import ABC, abstractmethod
+
+# Kelas induk Karyawan
+class Karyawan(ABC):
+    def __init__(self, nama, peran, jam_kerja, tugas_selesai):
+        self.nama = nama
+        self.peran = peran
+        self.jam_kerja = jam_kerja
+        self.tugas_selesai = tugas_selesai
+    
+    @abstractmethod
+    def bekerja(self):
+        pass
+    
+    def evaluasi_kinerja(self):
+        produktivitas = self.tugas_selesai / max(1, self.jam_kerja)
+        if produktivitas > 1.5:
+            return "Kinerja Tinggi"
+        elif produktivitas > 0.75:
+            return "Kinerja Sedang"
+        else:
+            return "Kinerja Rendah"
+    
+    def tampilkan_kinerja(self):
+        print(f"{self.nama} ({self.peran}) sedang bekerja.")
+        print(f"Peringkat Kinerja: {self.evaluasi_kinerja()}\n")
+
+# Kelas turunan InsinyurPerangkatLunak
+class software_engineer(Karyawan):
+    def __init__(self, nama, jam_kerja, tugas_selesai):
+        super().__init__(nama, "Software Engineer", jam_kerja, tugas_selesai)
+    
+    def bekerja(self):
+        print(f"{self.nama} (Software Engineer) sedang ngoding.")
+
+# Kelas turunan IlmuwanData
+class data_scientist(Karyawan):
+    def __init__(self, nama, jam_kerja, tugas_selesai):
+        super().__init__(nama, "Data Scientist", jam_kerja, tugas_selesai)
+    
+    def bekerja(self):
+        print(f"{self.nama} (Data Scientist) sedang menganalisis data.")
+
+# Kelas turunan ManajerProduk
+class ManajerProduk(Karyawan):
+    def __init__(self, nama, jam_kerja, tugas_selesai):
+        super().__init__(nama, "Product Manager", jam_kerja, tugas_selesai)
+    
+    def bekerja(self):
+        print(f"{self.nama} (Product Manager) sedang mengelola roadmap produk.")
+
+karyawans = [
+    software_engineer("farhan", 40, 70),
+    data_scientist("andika", 45, 40),
+    ManajerProduk("wily", 50, 38),
+    software_engineer("ciko", 30, 20)
+]
+for karyawan in karyawans:
+    karyawan.bekerja()
+    karyawan.tampilkan_kinerja()
