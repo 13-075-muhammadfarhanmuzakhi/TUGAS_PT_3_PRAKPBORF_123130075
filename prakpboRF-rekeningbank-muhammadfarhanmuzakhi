@@ -1,0 +1,57 @@
+#muhammad farhan muzakhi_123140075
+class RekeningBank:
+    
+    kurs = {
+        ("USD", "EUR"): 0.91,
+        ("EUR", "USD"): 1.1,
+        ("USD", "IDR"): 15000,
+        ("IDR", "USD"): 0.000067,
+        ("EUR", "IDR"): 16500,
+        ("IDR", "EUR"): 0.000061
+    }    
+    def __init__(self, pemilik, saldo, mata_uang):
+        self.pemilik = pemilik
+        self.saldo = saldo
+        self.mata_uang = mata_uang
+    
+    def konversi_mata_uang(self, jumlah, ke_mata_uang):
+        if self.mata_uang == ke_mata_uang:
+            return jumlah
+        return jumlah * self.kurs.get((self.mata_uang, ke_mata_uang), 1)
+    
+    def __add__(self, jumlah):
+        self.saldo += jumlah
+        print(f"{self.pemilik}: Saldo setelah deposit = {self.saldo:.2f} {self.mata_uang}")
+    
+    def __sub__(self, jumlah):
+        if jumlah > self.saldo:
+            print("Saldo tidak mencukupi untuk penarikan!")
+        else:
+            self.saldo -= jumlah
+            print(f"{self.pemilik}: Saldo setelah penarikan = {self.saldo:.2f} {self.mata_uang}")
+    
+    def terapkan_bunga(self):
+        bunga = 0.02 if self.saldo > 5000 else 0.01
+        self.saldo += self.saldo * bunga
+        print(f"{self.pemilik}: Bunga diterapkan... Saldo baru = {self.saldo:.2f} {self.mata_uang}")
+    
+    def tampilkan_saldo(self):
+        print(f"{self.pemilik}: Saldo saat ini = {self.saldo:.2f} {self.mata_uang}")
+        if self.saldo < 100:
+            print("Peringatan: Saldo Rendah!")
+
+farhan = RekeningBank("Farhan", 5000, "USD")
+andika = RekeningBank("Andika", 1000, "EUR")
+
+farhan.tampilkan_saldo()
+farhan.terapkan_bunga()
+
+total_usd = andika.konversi_mata_uang(andika.saldo, "USD")
+print(f"{andika.pemilik}: Saldo dalam USD setelah konversi = ${total_usd:.2f}")
+
+jumlah_penarikan = 1200
+if jumlah_penarikan > total_usd:
+    print("Saldo tidak mencukupi untuk penarikan!")
+else:
+    andika - jumlah_penarikan / andika.kurs[("USD", "EUR")]
+    print(f"{andika.pemilik}: Saldo setelah penarikan = {andika.saldo:.2f} {andika.mata_uang}")
